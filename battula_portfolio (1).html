@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BATTULA — Java Full Stack Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0a0a0f;
+  --bg2:#111118;
+  --bg3:#16161f;
+  --card:#1a1a25;
+  --border:#2a2a3a;
+  --accent:#7c6ef2;
+  --accent2:#4ecdc4;
+  --accent3:#f7931e;
+  --text:#eeeef5;
+  --muted:#888899;
+  --green:#22c55e;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:-0.02em;color:var(--accent);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.875rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;transition:color 0.2s;}
+.nav-links a:hover{color:var(--text);}
+.nav-status{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--green);}
+.dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:700px;height:700px;background:radial-gradient(circle,rgba(124,110,242,0.12) 0%,transparent 70%);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:-30%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(78,205,196,0.08) 0%,transparent 70%);pointer-events:none;}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(124,110,242,0.12);border:1px solid rgba(124,110,242,0.3);color:var(--accent);padding:6px 16px;border-radius:100px;font-size:0.8rem;font-family:'Space Mono',monospace;margin-bottom:1.5rem;}
+h1.hero-name{font-family:'Syne',sans-serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:800;line-height:0.95;letter-spacing:-0.03em;margin-bottom:1rem;}
+h1.hero-name span{color:var(--accent);}
+.hero-sub{font-size:1.1rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;max-width:480px;}
+.hero-sub strong{color:var(--text);}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-primary{background:var(--accent);color:#fff;padding:0.75rem 1.75rem;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.9rem;transition:all 0.2s;border:none;cursor:pointer;}
+.btn-primary:hover{background:#6a5edc;transform:translateY(-2px);}
+.btn-outline{background:transparent;color:var(--text);padding:0.75rem 1.75rem;border-radius:8px;text-decoration:none;font-weight:500;font-size:0.9rem;border:1px solid var(--border);transition:all 0.2s;}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+.hero-visual{display:flex;flex-direction:column;gap:1rem;}
+.code-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1.25rem;font-family:'Space Mono',monospace;font-size:0.78rem;line-height:1.8;}
+.code-card .c-header{display:flex;align-items:center;gap:8px;margin-bottom:0.75rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border);}
+.dot-r{width:10px;height:10px;background:#ff5f56;border-radius:50%;}
+.dot-y{width:10px;height:10px;background:#ffbd2e;border-radius:50%;}
+.dot-g{width:10px;height:10px;background:#27c93f;border-radius:50%;}
+.ky{color:#7c6ef2;}.kv{color:#4ecdc4;}.kc{color:#888899;}.ks{color:#f7931e;}
+.stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+.stat-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;}
+.stat-num{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent);}
+.stat-lbl{font-size:0.75rem;color:var(--muted);margin-top:4px;}
+
+/* SECTIONS */
+section{padding:6rem 2rem;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-label{font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.5rem;}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:3rem;}
+.section-title span{color:var(--accent);}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:4rem;align-items:start;}
+.about-text p{color:var(--muted);line-height:1.8;font-size:1rem;margin-bottom:1rem;}
+.about-text p strong{color:var(--text);}
+.about-quote{background:var(--bg3);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;border-radius:0 8px 8px 0;font-style:italic;color:var(--text);font-size:1rem;margin:1.5rem 0;line-height:1.7;}
+.info-list{display:flex;flex-direction:column;gap:0.75rem;margin-top:1rem;}
+.info-item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:0.875rem 1rem;}
+.info-icon{font-size:1.25rem;width:32px;text-align:center;}
+.info-content p{font-size:0.8rem;color:var(--muted);}
+.info-content a,.info-content strong{color:var(--text);font-size:0.9rem;font-weight:500;text-decoration:none;}
+.info-content a:hover{color:var(--accent);}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
+.skill-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:border-color 0.2s,transform 0.2s;}
+.skill-card:hover{border-color:var(--accent);transform:translateY(-3px);}
+.skill-card-header{display:flex;align-items:center;gap:12px;margin-bottom:1.25rem;}
+.skill-icon{width:42px;height:42px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;}
+.skill-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.tag{background:rgba(124,110,242,0.1);border:1px solid rgba(124,110,242,0.25);color:var(--accent);padding:4px 12px;border-radius:100px;font-size:0.78rem;font-family:'Space Mono',monospace;}
+.tag.teal{background:rgba(78,205,196,0.1);border-color:rgba(78,205,196,0.25);color:var(--accent2);}
+.tag.orange{background:rgba(247,147,30,0.1);border-color:rgba(247,147,30,0.25);color:var(--accent3);}
+.tag.green{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.25);color:var(--green);}
+.tag.muted{background:rgba(136,136,153,0.1);border-color:rgba(136,136,153,0.25);color:var(--muted);}
+.learning-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(247,147,30,0.12);border:1px solid rgba(247,147,30,0.3);color:var(--accent3);padding:4px 12px;border-radius:100px;font-size:0.78rem;font-family:'Space Mono',monospace;margin-bottom:0.75rem;}
+.learning-badge::before{content:'⚡';}
+
+/* PROJECT */
+.project-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color 0.2s;}
+.project-card:hover{border-color:var(--accent);}
+.project-header{background:var(--bg3);padding:2rem 2rem 1.5rem;border-bottom:1px solid var(--border);}
+.project-emoji{font-size:2.5rem;margin-bottom:1rem;}
+.project-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:0.5rem;}
+.project-sub{color:var(--muted);font-size:0.875rem;font-family:'Space Mono',monospace;}
+.arch-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(78,205,196,0.1);border:1px solid rgba(78,205,196,0.25);color:var(--accent2);padding:4px 12px;border-radius:6px;font-size:0.75rem;margin-top:0.75rem;}
+.project-body{padding:2rem;}
+.project-desc{color:var(--muted);line-height:1.8;margin-bottom:1.5rem;}
+.features-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:1.5rem;}
+.feature{display:flex;align-items:flex-start;gap:8px;font-size:0.875rem;color:var(--muted);}
+.feature::before{content:'✓';color:var(--green);font-weight:700;margin-top:1px;flex-shrink:0;}
+.project-stack{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem;}
+.project-links{display:flex;gap:1rem;}
+.link-btn{display:inline-flex;align-items:center;gap:8px;padding:0.6rem 1.25rem;border-radius:8px;text-decoration:none;font-size:0.875rem;font-weight:500;transition:all 0.2s;border:1px solid var(--border);color:var(--text);}
+.link-btn:hover{border-color:var(--accent);color:var(--accent);}
+.link-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+.link-btn.primary:hover{background:#6a5edc;}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:0.8fr 1.2fr;gap:4rem;align-items:start;}
+.contact-info{display:flex;flex-direction:column;gap:1rem;}
+.contact-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;align-items:center;gap:1rem;text-decoration:none;transition:border-color 0.2s,transform 0.2s;}
+.contact-card:hover{border-color:var(--accent);transform:translateX(4px);}
+.contact-icon{width:44px;height:44px;border-radius:10px;background:rgba(124,110,242,0.15);display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;}
+.contact-label{font-size:0.75rem;color:var(--muted);}
+.contact-val{color:var(--text);font-size:0.9rem;font-weight:500;}
+.contact-form{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;}
+.form-group{margin-bottom:1.25rem;}
+.form-group label{display:block;font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em;font-family:'Space Mono',monospace;}
+.form-group input,.form-group textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent);}
+.form-group textarea{resize:vertical;min-height:120px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--muted);font-size:0.85rem;}
+footer span{color:var(--accent);}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(30px);animation:fadeUp 0.7s ease forwards;}
+@keyframes fadeUp{to{opacity:1;transform:none;}}
+.delay-1{animation-delay:0.1s;}
+.delay-2{animation-delay:0.2s;}
+.delay-3{animation-delay:0.3s;}
+.delay-4{animation-delay:0.4s;}
+
+/* MOBILE */
+@media(max-width:768px){
+  .hero-inner{grid-template-columns:1fr;gap:2rem;}
+  .hero-visual{display:none;}
+  .about-grid{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .features-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .stat-row{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">BATTULA</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-status"><span class="dot"></span>Open to Opportunities</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag fade-up">☕ Java Full Stack Developer (Fresher)</div>
+      <h1 class="hero-name fade-up delay-1">BATTULA<br/><span>PAVANSAI</span></h1>
+      <p class="hero-sub fade-up delay-2">A passionate BTech student building robust backend systems with <strong>Java &amp; Spring Boot</strong> and exploring the full stack. Eager to contribute, learn fast, and grow with the right team.</p>
+      <div class="hero-ctas fade-up delay-3">
+        <a href="#about" class="btn-primary">View My Profile</a>
+        <a href="#contact" class="btn-outline">Get In Touch</a>
+      </div>
+    </div>
+    <div class="hero-visual fade-up delay-2">
+      <div class="code-card">
+        <div class="c-header"><div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div></div>
+        <div><span class="ky">class</span> <span class="kv">Developer</span> {</div>
+        <div>&nbsp;&nbsp;<span class="ky">String</span> <span class="kv">name</span> = <span class="ks">"BATTULA PAVANSAI"</span>;</div>
+        <div>&nbsp;&nbsp;<span class="ky">String</span> <span class="kv">role</span> = <span class="ks">"Full Stack Dev"</span>;</div>
+        <div>&nbsp;&nbsp;<span class="ky">String[]</span> <span class="kv">stack</span> = {</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ks">"Java"</span>, <span class="ks">"Spring Boot"</span>,</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="ks">"MySQL"</span>, <span class="ks">"React"</span></div>
+        <div>&nbsp;&nbsp;};</div>
+        <div>&nbsp;&nbsp;<span class="ky">boolean</span> <span class="kv">openToWork</span> = <span class="kc">true</span>;</div>
+        <div>}</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-item"><div class="stat-num">1</div><div class="stat-lbl">Project Built</div></div>
+        <div class="stat-item"><div class="stat-num">5+</div><div class="stat-lbl">Technologies</div></div>
+        <div class="stat-item"><div class="stat-num">3rd</div><div class="stat-lbl">Year BTech</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="background:var(--bg2);">
+  <div class="section-inner">
+    <div class="section-label">01 / About</div>
+    <h2 class="section-title">Who I <span>Am</span></h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a <strong>3rd year BTech student</strong> at Seshadri Rao Gudlavalleru Engineering College. My programming journey started with Core Java and I've since built a strong understanding of <strong>object-oriented concepts, collections, and database connectivity.</strong></p>
+        <p>I'm currently expanding into Spring Boot to build real-world REST APIs, and sharpening my problem-solving skills through DSA practice. I'm highly motivated to land a placement and prove my abilities in a professional environment.</p>
+        <div class="about-quote">I believe in learning by building — every concept I study, I try to apply it in a project or code challenge.</div>
+        <p>Based in <strong>Gudlavalleru</strong>, Andhra Pradesh — ready to relocate and contribute to any team that values curiosity and hard work.</p>
+      </div>
+      <div class="info-list">
+        <div class="info-item">
+          <div class="info-icon">🎓</div>
+          <div class="info-content"><strong>Seshadri Rao Gudlavalleru Engineering College</strong><p>College</p></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📚</div>
+          <div class="info-content"><strong>4th Year, 1st Semester · BTech</strong><p>Current Year</p></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📧</div>
+          <div class="info-content"><a href="mailto:Batthulapavansai@gmail.com">Batthulapavansai@gmail.com</a><p>Email</p></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📱</div>
+          <div class="info-content"><strong>9182766266</strong><p>Phone / WhatsApp</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label">02 / Skills</div>
+    <h2 class="section-title">What I <span>Know</span></h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(124,110,242,0.15);">☕</div>
+          <div class="skill-name">Core Java</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">OOPs</span>
+          <span class="tag">Classes</span>
+          <span class="tag">Inheritance</span>
+          <span class="tag">Exception Handling</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(78,205,196,0.15);">📦</div>
+          <div class="skill-name">Collections</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag teal">ArrayList</span>
+          <span class="tag teal">HashMap</span>
+          <span class="tag teal">LinkedList</span>
+          <span class="tag teal">Set</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(247,147,30,0.15);">🗄️</div>
+          <div class="skill-name">Database</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag orange">SQL</span>
+          <span class="tag orange">MySQL</span>
+          <span class="tag orange">JDBC</span>
+          <span class="tag orange">Queries</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(34,197,94,0.15);">🌱</div>
+          <div class="skill-name">Spring Boot</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag green">REST APIs</span>
+          <span class="tag green">Spring MVC</span>
+          <span class="tag green">Basic</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(136,136,153,0.15);">🛠️</div>
+          <div class="skill-name">Tools</div>
+        </div>
+        <div class="skill-tags">
+          <span class="tag muted">Git</span>
+          <span class="tag muted">GitHub</span>
+          <span class="tag muted">Eclipse</span>
+          <span class="tag muted">VS Code</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon" style="background:rgba(247,147,30,0.15);">🧠</div>
+          <div class="skill-name">Currently Learning</div>
+        </div>
+        <div class="learning-badge" style="font-size:0.7rem;">In Progress</div>
+        <div class="skill-tags">
+          <span class="tag orange">React</span>
+          <span class="tag orange">MongoDB</span>
+          <span class="tag orange">DSA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT -->
+<section id="projects" style="background:var(--bg2);">
+  <div class="section-inner">
+    <div class="section-label">03 / Projects</div>
+    <h2 class="section-title">What I've <span>Built</span></h2>
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-emoji">🚗</div>
+        <div class="project-title">Parking Lot System</div>
+        <div class="project-sub">Core Java · JDBC · MySQL · Console Application</div>
+        <div class="arch-badge">🏛️ 3-Layer Architecture · Placement Portfolio Project</div>
+      </div>
+      <div class="project-body">
+        <p class="project-desc">A console-based Parking Lot Management System built with Core Java and MySQL, featuring a clean 3-layer architecture (Presentation → Business Logic → Data Access). The system manages vehicle entry/exit, slot allocation, and generates billing with duration-based charges — all persisted in a relational database via JDBC.</p>
+        <div class="features-grid">
+          <div class="feature">Vehicle entry with slot auto-allocation</div>
+          <div class="feature">Vehicle exit with duration tracking</div>
+          <div class="feature">Automated billing &amp; charge calculation</div>
+          <div class="feature">Real-time slot availability check</div>
+          <div class="feature">MySQL persistence via JDBC</div>
+          <div class="feature">Clean 3-layer (Presentation / BL / DAO)</div>
+        </div>
+        <div class="project-stack">
+          <span class="tag">Core Java</span>
+          <span class="tag teal">JDBC</span>
+          <span class="tag orange">MySQL</span>
+          <span class="tag">OOPs</span>
+          <span class="tag teal">Collections</span>
+          <span class="tag">Exception Handling</span>
+          <span class="tag muted">Console I/O</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/pavansaibattula" target="_blank" class="link-btn primary">GitHub Repo →</a>
+          <a href="#contact" class="link-btn">View Architecture</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label">04 / Contact</div>
+    <h2 class="section-title">Let's <span>Connect</span></h2>
+    <p style="color:var(--muted);margin-bottom:3rem;max-width:600px;line-height:1.7;">I'm actively looking for campus placements and internship opportunities. Whether you have a project, a job opening, or just want to connect — I'd love to hear from you!</p>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <a href="mailto:Batthulapavansai@gmail.com" class="contact-card">
+          <div class="contact-icon">✉️</div>
+          <div><div class="contact-val">Batthulapavansai@gmail.com</div><div class="contact-label">Email — best way to reach me</div></div>
+        </a>
+        <a href="tel:9182766266" class="contact-card">
+          <div class="contact-icon">📱</div>
+          <div><div class="contact-val">9182766266</div><div class="contact-label">Phone / WhatsApp</div></div>
+        </a>
+        <a href="https://linkedin.com" target="_blank" class="contact-card">
+          <div class="contact-icon">💼</div>
+          <div><div class="contact-val">LinkedIn Profile</div><div class="contact-label">Connect professionally</div></div>
+        </a>
+        <a href="https://github.com/pavansaibattula" target="_blank" class="contact-card">
+          <div class="contact-icon">🐙</div>
+          <div><div class="contact-val">GitHub Profile</div><div class="contact-label">View my code &amp; projects</div></div>
+        </a>
+      </div>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="John Doe"/>
+          </div>
+          <div class="form-group">
+            <label>Your Email</label>
+            <input type="email" placeholder="john@company.com"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" placeholder="e.g. Internship Opportunity"/>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Your message..."></textarea>
+        </div>
+        <button class="btn-primary" style="width:100%;font-size:1rem;padding:0.875rem;" onclick="alert('Message sent! Battula will get back to you soon.')">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Built with ❤️ by <span>BATTULA PAVANSAI</span> · Java Full Stack Developer · Gudlavalleru, AP</p>
+</footer>
+
+</body>
+</html>
